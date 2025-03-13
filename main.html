@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Progress Bars</title>
+    <style>
+        :root {
+            --bar-bg: #ddd;
+            --bar-fill: #4caf50;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f8f8;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .label {
+            width: 100px;
+            text-align: right;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .progress-wrapper {
+            width: 300px;
+            background-color: var(--bar-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 25px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--bar-fill);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .progress-value {
+            width: 40px;
+            margin-left: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            background: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="label">PULL UPS:</div>
+        <div class="progress-wrapper">
+            <div class="progress-bar" id="pullUpsBar"></div>
+        </div>
+        <input type="text" class="progress-value" id="pullUpsValue" value="10" oninput="updateProgress('pullUps', 15)">
+    </div>
+
+    <div class="progress-container">
+        <div class="label">PUSH UPS:</div>
+        <div class="progress-wrapper">
+            <div class="progress-bar" id="pushUpsBar"></div>
+        </div>
+        <input type="text" class="progress-value" id="pushUpsValue" value="15" oninput="updateProgress('pushUps', 20)">
+    </div>
+
+    <div class="progress-container">
+        <div class="label">PLANK:</div>
+        <div class="progress-wrapper">
+            <div class="progress-bar" id="plankBar"></div>
+        </div>
+        <input type="text" class="progress-value" id="plankValue" value="200" oninput="updateProgress('plank', 200)">
+    </div>
+
+    <script>
+        function updateProgress(exercise, maxValue) {
+            let valueElement = document.getElementById(exercise + 'Value');
+            let progressBar = document.getElementById(exercise + 'Bar');
+            let value = parseInt(valueElement.value) || 0;
+            value = Math.min(value, maxValue); // Ensure it doesn't exceed max
+            let percentage = (value / maxValue) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+
+        // Initialize progress bars
+        updateProgress('pullUps', 15);
+        updateProgress('pushUps', 20);
+        updateProgress('plank', 200);
+    </script>
+</body>
+</html>
